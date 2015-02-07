@@ -1,9 +1,11 @@
 ---
-title: Consectetur Elit
+title: Welcome to my blog
 layout: post
+published: true
 ---
 
-Sed id lacus eu urna ullamcorper mattis. Etiam ut nunc erat. Sed et velit ac nisi mattis mollis tempus id nulla. In varius fermentum posuere. Vivamus suscipit accumsan arcu ac ullamcorper. Aliquam adipiscing, ante non eleifend blandit, nunc diam vulputate augue, eu convallis lorem lacus in lacus. Curabitur ultricies ultrices diam, vel tincidunt dui rhoncus a. Vivamus at sapien in turpis consequat pharetra sit amet quis elit.
+I am Happy to write the first entry in my blog. I will try to write a blog post every
+week. the plan right now is to make the post about some devlopment work I made outside of study. If the week was so busy with Uni work, then I might just blog about it.
 
 ## Nam vel justo ut nisl rutrum lobortis
 

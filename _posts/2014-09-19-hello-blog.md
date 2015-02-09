@@ -2,6 +2,7 @@
 title: Welcome to my blog
 layout: post
 published: true
+<<<<<<< HEAD
 categories: articles
 tags: [sample-post]
 ---
@@ -15,4 +16,4 @@ week about some devlopment work I made outside of study. If the week was so busy
 <br>
 don't get me wrong. I haven't been to that many interviews. but I think it is the first question the interviewers tend to ask and for a good reason.
 
-so to answer the question, it is complicated. so maybe I will take about it more later. But long story short, I am an Egyptian, Muslim, brown, CS Major with alot of defficulties in his life, or so I believe. that's it for hello blog.
+so to resopond I would say, it is complicated. so maybe I will take about it more later. But long story short, I am an Egyptian, Muslim, brown, CS Major with alot of defficulties in his life, or so I believe. that's it for hello blog.

@@ -1,9 +1,10 @@
-<h3>About Me</h3>
+<div class="col-sm-2">
+{% include Aboutme.html %}
+{% include Copyright_Notice.html %}
+{% include Resent_Posts.html %}
+{% include Categories.html %}
+{% include Tags.html %}
+{% include Blogroll.html %}
+{% include Archives.html %}
+</div>
 
-<p>A software developer from Egypt</p>
-
-<ul>
-  {% for post in site.posts limit: 5 %}
-    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-  {% endfor %}
-</ul>

@@ -2,6 +2,10 @@
 title: A solver for three-in-a-row-puzzle
 layout: post
 published: true
+categories: articles
+tags: 
+  - constraint-programming
+  - tutorial
 ---
 
 <br>

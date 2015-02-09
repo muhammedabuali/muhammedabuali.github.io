@@ -2,9 +2,9 @@
 title: Welcome to my blog
 layout: post
 published: true
-<<<<<<< HEAD
 categories: articles
-tags: [sample-post]
+tags: 
+  - sample-post
 ---
 <br>
 I am Happy to write the first entry in my blog. I will try to write a blog post every

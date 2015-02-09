@@ -12,6 +12,7 @@ I was happy I got an A+ in the constraint programming course and I was bored, so
 the puzzle is called three-in-a-row you can play it online [here](http://www.brainbashers.com/3inarow.asp) . essentially, you have two fill the grid with white and blue blocks such that, no three consecutive blocks have the same color. besides, every row and every column should have an equal number of white and blue blocks.
 ![empty puzzle example](/home/muhammed/workspace/web/muhammedabuali.github.io/images/puzzle-empty.png  "a photo for an empty puzzle")
 <br>
+
 ### The code
 the code consists of three parts:
 - input code: a javascript code to read the locations of filled blocks

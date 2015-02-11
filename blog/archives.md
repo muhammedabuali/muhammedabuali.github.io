@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Archives
-permalink: /archives/
+permalink: /blog/archives/
 ---
 
 <ul class="tags-box">

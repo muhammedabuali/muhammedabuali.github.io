@@ -2,7 +2,7 @@
 layout: page
 title: About
 comments: yes
-permalink: /about/
+permalink: /blog/about/
 ---
 
 

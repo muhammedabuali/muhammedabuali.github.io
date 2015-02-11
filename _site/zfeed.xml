@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Muhammedabuali</title>
+    <title>Muhammed Abuali</title>
     <description>Freshman21 is a Jekyll blog theme.</description>
     <link>http://Muhammedabuali.github.io/</link>
     <atom:link href="http://Muhammedabuali.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 09 Feb 2015 18:30:42 +0200</pubDate>
-    <lastBuildDate>Mon, 09 Feb 2015 18:30:42 +0200</lastBuildDate>
+    <pubDate>Wed, 11 Feb 2015 23:55:38 +0200</pubDate>
+    <lastBuildDate>Wed, 11 Feb 2015 23:55:38 +0200</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -205,14 +205,20 @@ this looks like a nice idea, but javascript doesn’t make that easy. fortunatel
 &lt;p&gt;in this blog post, I explained how I worte a solver for an online puzzle using &lt;em&gt;python&lt;/em&gt; and how jacascript can be used. If you have read this far then congratulations! let me know what you think in the comments.&lt;/p&gt;
 </description>
         <pubDate>Mon, 09 Feb 2015 00:00:00 +0200</pubDate>
-        <link>http://Muhammedabuali.github.io/2015/02/09/three-in-a-row.html</link>
-        <guid isPermaLink="true">http://Muhammedabuali.github.io/2015/02/09/three-in-a-row.html</guid>
+        <link>http://Muhammedabuali.github.io/articles/2015/02/09/three-in-a-row.html</link>
+        <guid isPermaLink="true">http://Muhammedabuali.github.io/articles/2015/02/09/three-in-a-row.html</guid>
         
+        <category>constraint-programming</category>
+        
+        <category>tutorial</category>
+        
+        
+        <category>articles</category>
         
       </item>
     
       <item>
-        <title>Hello Blog</title>
+        <title>Welcome to my blog</title>
         <description>&lt;p&gt;&lt;br /&gt;
 I am Happy to write the first entry in my blog. I will try to write a blog post every
 week about some devlopment work I made outside of study. If the week was so busy with Uni work, then I might just blog about it. this is also my first blog ever I hope a blog will be useful at some point.&lt;/p&gt;
@@ -225,10 +231,14 @@ don’t get me wrong. I haven’t been to that many interviews. but I think it i
 
 &lt;p&gt;so to resopond I would say, it is complicated. so maybe I will take about it more later. But long story short, I am an Egyptian, Muslim, brown, CS Major with alot of defficulties in his life, or so I believe. that’s it for hello blog.&lt;/p&gt;
 </description>
-        <pubDate>Fri, 19 Sep 2014 00:00:00 +0300</pubDate>
-        <link>http://Muhammedabuali.github.io/2014/09/19/hello-blog.html</link>
-        <guid isPermaLink="true">http://Muhammedabuali.github.io/2014/09/19/hello-blog.html</guid>
+        <pubDate>Wed, 04 Feb 2015 00:00:00 +0200</pubDate>
+        <link>http://Muhammedabuali.github.io/articles/2015/02/04/hello-blog.html</link>
+        <guid isPermaLink="true">http://Muhammedabuali.github.io/articles/2015/02/04/hello-blog.html</guid>
         
+        <category>sample-post</category>
+        
+        
+        <category>articles</category>
         
       </item>
     

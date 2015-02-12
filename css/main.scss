@@ -60,3 +60,18 @@ $on-laptop:        800px;
 
 @import url('http://fonts.googleapis.com/css?family=Open+Sans');
 
+
+.center{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cell:hover {
+    color: $brand-top-color;
+}
+
+.cell {
+    padding: 15px;
+    color: $text-color;
+}

@@ -679,3 +679,15 @@ q:after {
     color: #40ffff; }
   .highlight .il {
     color: #3677a9; }
+
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto; }
+
+.cell:hover {
+  color: #2583ad; }
+
+.cell {
+  padding: 15px;
+  color: #111; }

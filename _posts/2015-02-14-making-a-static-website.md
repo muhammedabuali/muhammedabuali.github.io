@@ -4,7 +4,7 @@ published: false
 
 ## making a blog static website
 
-In this post I will be talking about making a blog using a static website generator.
+In this brief post I will be talking about making a blog using a static website generator.
 One of the famous ones is [Jekyll](http://jekyllrb.com/). also, I will talk about the advantage of a static website.
 
 ## why a static website?

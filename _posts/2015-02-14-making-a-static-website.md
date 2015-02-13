@@ -14,4 +14,15 @@ you might be wondering why would you use a static website. afterall, they are du
 
 
 ## what is jekyll?
-jekyll is a [ruby](https://en.wikipedia.org/wiki/Ruby_%28programming_language%29) [gem](https://en.wikipedia.org/wiki/RubyGems) that tries to take away the tediousness and repition of managing your static website.
+jekyll is a [ruby](https://en.wikipedia.org/wiki/Ruby_%28programming_language%29) [gem](https://en.wikipedia.org/wiki/RubyGems) that tries to take away the tediousness and repition of managing your static website.jekyll does the following.
+1. templating: jekyll allows easy management of templates and layouts you don't have to copy paste stuff just include the relevant files.
+2. posts management: jekyll easily manages your posts. you simply use the markdown format to write your posts and put them in the _posts_ directoy. jekyll allows also tags, categories and drafts.
+
+## getting started with jekyll
+getting started with jekyll is very easyif you know [git](https://en.wikipedia.org/wiki/Git_(software)). simply, make a repo. download a theme form [jekyll themes](http://jekyllthemes.org/) and start writing your posts. yes, it is that easy. it also comes with free hosting supported by [Github](http://github.com/).
+
+## closing
+
+
+
+

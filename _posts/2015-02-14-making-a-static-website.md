@@ -21,7 +21,8 @@ jekyll is a [ruby](https://en.wikipedia.org/wiki/Ruby_%28programming_language%29
 ## getting started with jekyll
 getting started with jekyll is very easyif you know [git](https://en.wikipedia.org/wiki/Git_(software)). simply, make a repo. download a theme form [jekyll themes](http://jekyllthemes.org/) and start writing your posts. yes, it is that easy. it also comes with free hosting supported by [Github](http://github.com/).
 
-## closing
+## closing statement
+making your blog is very easy with jekyll. this blog is already using jekyll. stay tuned for more posts.
 
 
 

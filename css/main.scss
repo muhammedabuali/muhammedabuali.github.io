@@ -24,7 +24,7 @@ $grey-color-light: lighten($grey-color, 40%);
 $grey-color-dark:  darken($grey-color, 25%);
 
 $code-backgroud-color: #29281e;
-$code-font-color:  #eee;  
+$code-font-color:  #eee;
 
 
 // Width of the content area
@@ -67,6 +67,11 @@ $on-laptop:        800px;
     margin-right: auto;
 }
 
+h3{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 .cell:hover {
     color: $brand-top-color;
 }

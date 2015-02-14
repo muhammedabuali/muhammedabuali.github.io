@@ -1,5 +1,11 @@
 ---
+title: let's make a blog in 2 minutes
+layout: post
 published: true
+categories: articles
+tags:
+- web
+- tutorial
 ---
 
 ## making a blog static website
@@ -23,7 +29,3 @@ getting started with jekyll is very easyif you know [git](https://en.wikipedia.o
 
 ## closing statement
 making your blog is very easy with jekyll. this blog is already using jekyll. stay tuned for more posts.
-
-
-
-

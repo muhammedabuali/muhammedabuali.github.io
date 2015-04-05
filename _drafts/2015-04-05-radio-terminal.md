@@ -10,3 +10,4 @@ the radio station in this post is the quran radio station at [Quran Radio Websit
 in the beginning, I wanted to get the streaming link the website uses to recieve the data. the website uses [JWPlayer](http://www.jwplayer.com/) to stream the radio.Using the web browser's developer tools I found the script used to stream the radio station. the script included the url of the streamed data. after that I inspected the network tab. I found out that the website uses [RTMP](http://en.wikipedia.org/wiki/Real_Time_Messaging_Protocol) protocol to communicate with the server.
 
 ## RTMP
+

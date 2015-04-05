@@ -1,5 +1,5 @@
 ---
-title: How to I streamed an online radio station through the terminal
+title: How I streamed an online radio station through the terminal
 layout: post
 published: true
 categories: articles

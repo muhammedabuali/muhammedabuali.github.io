@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>The Vast Ocean: Another Page</title>
+    <title>The Vast Ocean: How I streamed an online radio station through the terminal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Alegreya:400italic,700italic,400,700' rel='stylesheet'
           type='text/css'>
@@ -50,20 +50,41 @@
         <div class="col-lg-9">
             <div id="content">
                 
-<div id="custom-page">
-    <div id="page-header">
-        <h2>Another Page</h2>
+<div id="post">
+    <div id="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">April 5, 2015</div>
+        
     </div>
+    <h2>How I streamed an online radio station through the terminal</h2>
+</div>
+<div>
     
-    <h2><a name="look&#95;at&#95;this&#95;sweet&#95;page"></a>Look at this sweet page</h2><p>this is another custom page totally not a post</p>
+    <p>the radio station in this post is the quran radio station at <a href='http://www.ertu.org/quran/QuranKareem.html'>Quran Radio Website</a>.in this post I will explain in detail how I could stream the station through the terminal. if you just want to know the how-to skip to the end of this post.</p><h2><a name="the&#95;website"></a>The website</h2>in the beginning, I wanted to get the streaming link the website uses to recieve the data. the website uses <a href='http://www.jwplayer.com/'>JWPlayer</a> to stream the radio.Using the web browser's developer tools I found the script used to stream the radio station. the script included the url of the streamed data. after that I inspected the network tab. I found out that the website uses <a href='http://en.wikipedia.org/wiki/Real&#95;Time&#95;Messaging&#95;Protocol'>RTMP</a> protocol to communicate with the server.<br/><img src="/img/radio-web.png" alt="getting the stream url" title= "a photo for an browser inspector" /><h2><a name="rtmp"></a>RTMP</h2>after some google search, I stumbled upon rtmpdump <a href='https://rtmpdump.mplayerhq.hu/'>rtmpdump</a>. as the name suggests, it dumps a stream of rtmp station into a file or the stdin.But there is a catch. there are some parameters you need to set otherwise you will get a connection error.so how do I get the parameters? enter <a href='https://www.wireshark.org/'>wireshark</a>.<h2><a name="wireshark"></a>wireshark</h2>through <i>wireshark</i>, I tracked the packets with the <i>RTMP</i> protocol. I investigated the headers of those packets and used them as parameters for <i>rtmpdump</i> and after some trial and error I finally got a connection. I pipelined the stream to the <a href='http://mpv.io/'>mpv player</a> and it ran without GUI, efficently reading the stream.
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/tags/shell.html">shell</a>
+    
+    <a href="/tags/tinkering.html">tinkering</a>
+    
+</div>
+
 
     <div id="prev-next">
         
-        <a href="/pages/about.html">&laquo; About</a>
+        <a href="/posts/2015-07-05-hello-cryogen.html">&laquo; Hello Cryogen.. Goodbye Python.. Hello Clojure</a>
         
         
+        <a class="right" href="/posts/2015-02-14-making-a-static-website.html"> let&#39;s make a blog in 2 minutes &raquo;</a>
         
     </div>
+
+    
+
+
 </div>
 
             </div>

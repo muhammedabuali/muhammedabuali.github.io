@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>The Vast Ocean: A solver for three-in-a-row-puzzle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Alegreya:400italic,700italic,400,700' rel='stylesheet'
+          type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css">
+    <link href="../css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index.html">The Vast Ocean</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ><a href="/index.html">Home</a></li>
+                <li
+                ><a href="/archives.html">Archives</a></li>
+                
+                <li
+                >
+                <a href="/pages/about.html">About</a>
+                </li>
+                
+                <li><a href="/feed.xml">RSS</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-lg-9">
+            <div id="content">
+                
+<div id="post">
+    <div id="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">February 9, 2015</div>
+        
+    </div>
+    <h2>A solver for three-in-a-row-puzzle</h2>
+</div>
+<div>
+    
+    <p>I was happy I got an A+ in the constraint programming course and I was bored, so I decided to make a solver for a puzzle. Although I found out later the grades were somehow inflated, I like to make stuff like that. In this post I will explain how I did a solver for an online puzzle. including the <em>javascript</em> code to read the puzzle and to post the answers back. <br> <br></p><h3><a name="the&#95;puzzle"></a>The puzzle</h3>the puzzle is called three-in-a-row you can play it online <a href='http://www.brainbashers.com/3inarow.asp'>here</a> . essentially, you have two fill the grid with white and blue blocks such that, no three consecutive blocks have the same color. besides, every row and every column should have an equal number of white and blue blocks.<br><img src="/images/puzzle-empty.png" alt="empty puzzle example" title= "a photo for an empty puzzle" /><br><br><h3><a name="the&#95;code"></a>The code</h3><ul><li>input code: a <em>javascript</em> code to read the locations of filled blocks</li><li>constraint solving: a <em>python</em> code to find the solution</li><li>output code: a <em>javascript</em> code given the solutions it fills the grid with the right blocks. we don't want to click on those blocks manually do we?<br><br></li></ul><h3><a name="the&#95;input"></a>The input</h3>I wrote a simple <em>javascript</em> code that loops over the table cells and produces two arrays, <strong>whites</strong> and <strong>blues</strong>. the arrays contain the locations of the blue and white blocks and are later printed through the browser javascript console<p>{% highlight javascript %} my_table = document.getElementsByClassName('inarowtable')[0]</p><p>whites=[] blues=[] for (var i=1; i< my_table.rows.length; i++){  var base = (i-1) * (my_table.rows.length-1);   for (var j=0; j< my_table.rows[0].cells.length-1; j++){<pre><code>var cell = my&#95;table.rows&#91;i&#93;.cells&#91;j&#93;;
+var class&#95;name = cell.className;
+if &#40;class&#95;name.indexOf&#40;&quot;white&quot;&#41; &gt;-1 &#41;{
+  whites.push&#40;base+j+1&#41;;
+}else if &#40;class&#95;name.indexOf&#40;&quot;black&quot;&#41; &gt;0 &#41;{
+  blues.push&#40;base+j+1&#41;;
+} 
+</code></pre>  } } console.log(whites.toString()); console.log(blues.toString()); {% endhighlight %}</p><p><br> <br></p><h3><a name="the&#95;solver"></a>The solver</h3>I use the <a href='https://code.google.com/p/or-tools/'>or-tools library</a> for the solver. it iswritten in <em>C++</em> and has bindings for <em>python</em> which of course is usually easier to code in. you need to install the <em>ortools</em> python package to run the solver code<br>for those of you unfamiliar with <a href='http://en.wikipedia.org/wiki/Constraint&#95;programming'>constraint programming</a>, it is a paradigm concerned with assigning values to variables by shrinking their domain using added constraints and then searching through remaining domain for possible solutions.<h4><a name="the&#95;variables"></a>The variables</h4>agrid of N x N variables where N is the width of the table. each cell could either be <em>blue</em> or <em>white</em>  so, I represent it with a 0 or 1.<h4><a name="the&#95;constraints"></a>The constraints</h4>the constraints are very easy to express <ol><li>no three cells of the same color in a row, so the sum of every three consecutive cells cannot be zero nor three</li><li>equal number of whites and blues in all rows and columns, so the sum of every row and column is exactly seven</li></ol><h4><a name="the&#95;input"></a>The input</h4>the input is simply the size of the grid and the blue and white arrays we got earlier<br><h4><a name="the&#95;code"></a>The code</h4><p>{% highlight python %} from ortools.constraint_solver import pywrapcp</p><p>def main(dimension, whites, blues):<pre><code>solver = pywrapcp.Solver&#40;&quot;three in a row&quot;&#41; 
+</code></pre><pre><code>line = range&#40;0, dimension&#41;
+grid = {} 
+</code></pre><pre><code>for i in line:
+    for j in line:
+        grid&#91;&#40;i, j&#41;&#93; = solver.IntVar&#40;0, 1&#41; 
+</code></pre><pre><code># set whites and blues
+for i in whites:
+    solver.Add&#40;grid&#91;&#40;&#40;i - 1&#41; / dimension, &#40;i - 1&#41; % dimension&#41;&#93; == 0&#41; 
+</code></pre><pre><code>for i in blues:
+    solver.Add&#40;grid&#91;&#40;&#40;i - 1&#41; / dimension, &#40;i - 1&#41; % dimension&#41;&#93; == 1&#41; 
+</code></pre><pre><code># vertically three in a row
+for i in range&#40;0, dimension - 2&#41;:
+    for j in line:
+        solver.Add&#40;
+            &#40;solver.Sum&#40;&#91;
+                grid&#91;&#40;i, j&#41;&#93;,
+                grid&#91;&#40;&#40;i + 1&#41;, j&#41;&#93;,
+                grid&#91;&#40;&#40;i + 2&#41;, j&#41;&#93;&#93;
+            &#41; % 3&#41;
+            &gt; 0&#41; 
+</code></pre><pre><code># horizontally three in a row
+for j in range&#40;0, dimension - 2&#41;:
+    for i in line:
+        solver.Add&#40;
+            &#40;solver.Sum&#40;&#91;
+                grid&#91;&#40;i, j&#41;&#93;,
+                grid&#91;&#40;i, &#40;j + 1&#41;&#41;&#93;,
+                grid&#91;&#40;i, &#40;j + 2&#41;&#41;&#93;&#93;
+            &#41; % 3&#41;
+            &gt; 0&#41; 
+</code></pre><pre><code># every row equal blue and white
+for i in line:
+    solver.Add&#40;solver.Sum&#40;&#91;grid&#91;&#40;i, j&#41;&#93; for j in line&#93;&#41; == dimension / 2&#41; 
+</code></pre><pre><code># every col equal blue and white
+for j in line:
+    solver.Add&#40;solver.Sum&#40;&#91;grid&#91;&#40;i, j&#41;&#93; for i in line&#93;&#41; == dimension / 2&#41; 
+</code></pre><pre><code>all&#95;vars = &#91;grid&#91;&#40;i, j&#41;&#93; for i in line for j in line&#93; 
+</code></pre><pre><code>vars&#95;phase = solver.Phase&#40;all&#95;vars,
+                          solver.INT&#95;VAR&#95;SIMPLE,
+                          solver.INT&#95;VALUE&#95;SIMPLE&#41; 
+</code></pre><pre><code>solution = solver.Assignment&#40;&#41;
+solution.Add&#40;all&#95;vars&#41;
+collector = solver.FirstSolutionCollector&#40;solution&#41; 
+</code></pre><pre><code># And solve.
+solver.Solve&#40;vars&#95;phase, &#91;collector&#93;&#41; 
+</code></pre><pre><code>if collector.SolutionCount&#40;&#41; == 1:
+    for i in line:
+        print &#91;int&#40;collector.Value&#40;0, grid&#91;&#40;i, j&#41;&#93;&#41;&#41; for j in line&#93; 
+</code></pre></p><p>if <b>name</b> == '<b>main</b>':<pre><code>main&#40;14,
+     &#91;17, 22, 24, 34, 38, 49, 50, 55, 57, 58, 60, 64, 70, 82, 84, 90, 92, 93, 104, 142, 145, 146, 149, 151, 161,
+      169, 174, 181, 182, 183&#93;,
+     &#91;2, 5, 7, 19, 26, 42, 47, 66, 72, 96, 99, 102, 111, 121, 124, 125, 158, 168, 179, 190&#93;&#41; 
+</code></pre>{% endhighlight %} <br> <br></p><h2><a name="the&#95;output"></a>The output</h2>Now we have made the solver and we can get the zeros and ones that would solve the puzzle and we want to insert them in the puzzle. but those puzzles are big and it takes time to fill all the cells, why not make another javascript code to click on the blocks.<br>this looks like a nice idea, but javascript doesn't make that easy. fortunately, <a href='http://jquery.com/'>JQuery</a> does. so I load JQuery into the page and then given the solution grid I fill the blocks<br><br><h3><a name="the&#95;code"></a>The code</h3>{% highlight javascript %}var jq = document.createElement('script');jq.src = "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js";document.getElementsByTagName('head')[0].appendChild(jq);<p>solution = [[0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1], [1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0], [1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1], [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0], [1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0], [0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0], [1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0], [0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1], [1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0], [1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1], [0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0], [0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1]];</p><p>for (var i=1; i< my_table.rows.length; i++){   var base = (i-1) * (my_table.rows.length-1);   for (var j=0; j< my_table.rows[0].cells.length-1; j++){<pre><code>var cell = my&#95;table.rows&#91;i&#93;.cells&#91;j&#93;;
+var class&#95;name = cell.className;
+if &#40;class&#95;name.indexOf&#40;&quot;grey&quot;&#41; &gt;-1 &#41;{
+  $&#40;cell&#41;.trigger&#40;'mouseup'&#41;;
+  if &#40;solution&#91;i-1&#93;&#91;j&#93; == 0&#41;{
+    $&#40;cell&#41;.trigger&#40;'mouseup'&#41;;
+  }
+} 
+</code></pre>  } } {% endhighlight %} <br> <br></p><h2><a name="summary"></a>Summary</h2>in this blog post, I explained how I worte a solver for an online puzzle using <em>python</em> and how jacascript can be used. If you have read this far then congratulations! let me know what you think in the comments.
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/tags/javascript.html">javascript</a>
+    
+    <a href="/tags/constraint-programming.html">constraint-programming</a>
+    
+    <a href="/tags/python.html">python</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        <a href="/posts/2015-02-14-making-a-static-website.html">&laquo;  let&#39;s make a blog in 2 minutes</a>
+        
+        
+        <a class="right" href="/posts/2015-02-04-hello-blog.html">Welcome to my blog &raquo;</a>
+        
+    </div>
+
+    
+
+
+</div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div id="sidebar">
+                <h3>Links</h3>
+                <ul id="links">
+                    <li><a href="http://cryogenweb.org/docs/home.html">Cryogen Docs</a></li>
+                    <li><a href="http://carmenla.me/blog/index.html">Carmen's Blog</a></li>
+                    
+                    <li><a href="/pages/another-page.html">Another Page</a></li>
+                    
+                </ul>
+                
+                <div id="recent">
+                    <h3>Recent Posts</h3>
+                    <ul>
+                        
+                        <li><a href="/posts/2015-07-05-hello-cryogen.html">Hello Cryogen.. Goodbye Python.. Hello Clojure</a></li>
+                        
+                        <li><a href="/posts/2015-04-05-radio-terminal.html">How I streamed an online radio station through the terminal</a></li>
+                        
+                        <li><a href="/posts/2015-02-14-making-a-static-website.html"> let&#39;s make a blog in 2 minutes</a></li>
+                        
+                    </ul>
+                </div>
+                
+                
+                <div id="tags">
+                    <h3>Tags</h3>
+                    <ul>
+                        
+                        <li><a href="/tags/personal.html">personal</a></li>
+                        
+                        <li><a href="/tags/python.html">python</a></li>
+                        
+                        <li><a href="/tags/constraint-programming.html">constraint-programming</a></li>
+                        
+                        <li><a href="/tags/javascript.html">javascript</a></li>
+                        
+                        <li><a href="/tags/tutorial.html">tutorial</a></li>
+                        
+                        <li><a href="/tags/tinkering.html">tinkering</a></li>
+                        
+                        <li><a href="/tags/shell.html">shell</a></li>
+                        
+                        <li><a href="/tags/web.html">web</a></li>
+                        
+                        <li><a href="/tags/clojure.html">clojure</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <footer>Copyright &copy; 2015 Muhammed Abuali
+        <p style="text-align: center;">Powered by <a href="http://cryogenweb.org">Cryogen</a></p></footer>
+</div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="../js/highlight.pack.js" type="text/javascript"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

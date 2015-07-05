@@ -15,125 +15,163 @@ http://blogawesome.com/
 about software from here and there
 </description>
 <lastBuildDate>
-Sun, 05 Jul 2015 21:55:16 +0200
+Sun, 05 Jul 2015 23:47:43 +0200
 </lastBuildDate>
 <item>
 <guid>
-http://blogawesome.com/posts/2014-12-11-docs.html
+http://blogawesome.com/posts/2015-07-05-hello-cryogen.html
 </guid>
 <link>
-http://blogawesome.com/posts/2014-12-11-docs.html
+http://blogawesome.com/posts/2015-07-05-hello-cryogen.html
 </link>
 <title>
-Using Cryogen
+Hello Cryogen.. Goodbye Python.. Hello Clojure
 </title>
 <description>
-&lt;p&gt;For additional documentation please see the &lt;a href='http://cryogenweb.org'&gt;cryogen site&lt;/a&gt;&lt;/p&gt;&lt;h2&gt;&lt;a name=&quot;features&quot;&gt;&lt;/a&gt;Features&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;blog posts and pages with Markdown (default) or AsciiDoc&lt;/li&gt;&lt;li&gt;tags&lt;/li&gt;&lt;li&gt;table of contents generation&lt;/li&gt;&lt;li&gt;Default Twitter Bootstrap theme&lt;/li&gt;&lt;li&gt;plain HTML page templates&lt;/li&gt;&lt;li&gt;code syntax highlighting&lt;/li&gt;&lt;li&gt;Disqus support&lt;/li&gt;&lt;li&gt;GitHub Gist integration&lt;/li&gt;&lt;li&gt;sitemap&lt;/li&gt;&lt;li&gt;Sass/SCSS compilation&lt;/li&gt;&lt;li&gt;RSS&lt;/li&gt;&lt;/ul&gt;&lt;h2&gt;&lt;a name=&quot;prerequisites&quot;&gt;&lt;/a&gt;Prerequisites&lt;/h2&gt;&lt;p&gt;You will need &lt;a href='https://github.com/technomancy/leiningen'&gt;Leiningen&lt;/a&gt; 2.5.0 or above installed.&lt;/p&gt;&lt;h2&gt;&lt;a name=&quot;usage&quot;&gt;&lt;/a&gt;Usage&lt;/h2&gt;&lt;h3&gt;&lt;a name=&quot;creating&amp;#95;a&amp;#95;new&amp;#95;site&quot;&gt;&lt;/a&gt;Creating a New Site&lt;/h3&gt;&lt;p&gt;A new site can be created using the Cryogen template as follows:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;lein new cryogen my-blog
-&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;&lt;a name=&quot;running&amp;#95;the&amp;#95;server&quot;&gt;&lt;/a&gt;Running the Server&lt;/h3&gt;&lt;p&gt;The web server can be started from the &lt;code&gt;my-blog&lt;/code&gt; directory using the &lt;code&gt;lein-ring&lt;/code&gt; plugin:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;lein ring server
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The server will watch for changes in the &lt;code&gt;resources/templates&lt;/code&gt; folder and recompile the content automatically.&lt;/p&gt;&lt;h3&gt;&lt;a name=&quot;site&amp;#95;configuration&quot;&gt;&lt;/a&gt;Site Configuration&lt;/h3&gt;&lt;p&gt;The site configuration file is found at &lt;code&gt;templates/config.edn&lt;/code&gt;, this file looks as follows:&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;clojure&quot;&gt;{:site-title       &amp;quot;My Awesome Blog&amp;quot;
- :author           &amp;quot;Bob Bobbert&amp;quot;
- :description      &amp;quot;This blog is awesome&amp;quot;
- :site-url         &amp;quot;http://blogawesome.com/&amp;quot;
- :post-root        &amp;quot;posts&amp;quot;
- :tag-root         &amp;quot;tags&amp;quot;
- :page-root        &amp;quot;pages&amp;quot;
- :blog-prefix      &amp;quot;/blog&amp;quot;
- :rss-name         &amp;quot;feed.xml&amp;quot;
- :rss-filters      &amp;#91;&amp;quot;cryogen&amp;quot;&amp;#93;
- :recent-posts     3
- :post-date-format &amp;quot;yyyy-MM-dd&amp;quot;
- :sass-src         nil
- :sass-dest        nil
- :resources        &amp;#91;&amp;quot;css&amp;quot; &amp;quot;js&amp;quot; &amp;quot;404.html&amp;quot;&amp;#93;
- :keep-files       &amp;#91;&amp;quot;.git&amp;quot;&amp;#93;
- :disqus?          false
- :disqus-shortname &amp;quot;&amp;quot;
- :ignored-files    &amp;#91;#&amp;quot;\.#.&amp;#42;&amp;quot; #&amp;quot;.&amp;#42;\.swp$&amp;quot;&amp;#93;}
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&lt;li&gt;&lt;code&gt;post-root&lt;/code&gt; - value prepended to all post uri's&lt;/li&gt;&lt;li&gt;&lt;code&gt;tag-root&lt;/code&gt; - value prepended to all tag uri's&lt;/li&gt;&lt;li&gt;&lt;code&gt;page-root&lt;/code&gt; - value prepended to all page uri's&lt;/li&gt;&lt;li&gt;&lt;code&gt;blog-prefix&lt;/code&gt; - prepended to all uri's (must start with slash), nil by default&lt;/li&gt;&lt;li&gt;&lt;code&gt;rss-name&lt;/code&gt; - name of the rss file generated, nil defaults to &lt;code&gt;rss.xml&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;rss-filters&lt;/code&gt; - used to generate tag-based rss feeds for topic-specific rss aggregators. Tags listed here should match tags being used in your posts.&lt;/li&gt;&lt;li&gt;&lt;code&gt;recent-posts&lt;/code&gt; - number of recent posts to display in the sidebar&lt;/li&gt;&lt;li&gt;&lt;code&gt;post-date-format&lt;/code&gt; - date format for your .md or .asc files, yyyy-MM-dd by default&lt;/li&gt;&lt;li&gt;&lt;code&gt;sass-src&lt;/code&gt; - directory containing sources of sass files to be  compiled - defaults to &quot;css&quot; - be sure to include this directory in  your &lt;code&gt;resources&lt;/code&gt; section&lt;/li&gt;&lt;li&gt;&lt;code&gt;sass-dest&lt;/code&gt; - directory where the compiled output CSS would be put    into. defaults to &quot;css&quot; - be sure to include this directory in    your &lt;code&gt;resources&lt;/code&gt; section&lt;/li&gt;&lt;li&gt;&lt;code&gt;resources&lt;/code&gt; - list of folders or files to be copied over from &lt;code&gt;templates&lt;/code&gt; to &lt;code&gt;public&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;keep-files&lt;/code&gt; - list of folders or files that are not wiped in the &lt;code&gt;public&lt;/code&gt; directory. For example, this allows to keep a &lt;code&gt;.git&lt;/code&gt; directory there across recompiles of the site to versionize the generated files&lt;/li&gt;&lt;li&gt;&lt;code&gt;disqus?&lt;/code&gt; - set to true if you want disqus enabled on your site&lt;/li&gt;&lt;li&gt;&lt;code&gt;disqus-shortname&lt;/code&gt; - your disqus shortname&lt;/li&gt;&lt;li&gt;&lt;code&gt;ignored-files&lt;/code&gt; - list of regexps matching files the compiler should ignore&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;&lt;a name=&quot;switching&amp;#95;between&amp;#95;markdown&amp;#95;and&amp;#95;asciidoc&quot;&gt;&lt;/a&gt;Switching between Markdown and AsciiDoc&lt;/h3&gt;&lt;p&gt;Cryogen comes with Markdown support as default. If you want to use AsciiDoc instead, open the &lt;code&gt;project.clj&lt;/code&gt; in your created blog (e.g. &lt;code&gt;my-blog&lt;/code&gt;), and change the line in &lt;code&gt;:dependencies&lt;/code&gt; that says &lt;code&gt;cryogen-markdown&lt;/code&gt; to &lt;code&gt;cryogen-asciidoc&lt;/code&gt;. Instead of looking for files ending in &lt;code&gt;.md&lt;/code&gt; in the &lt;code&gt;md&lt;/code&gt; directory, the compiler will now look for files ending in &lt;code&gt;.asc&lt;/code&gt; in the &lt;code&gt;asc&lt;/code&gt; directory.&lt;/p&gt;&lt;h3&gt;&lt;a name=&quot;creating&amp;#95;posts&quot;&gt;&lt;/a&gt;Creating Posts&lt;/h3&gt;&lt;p&gt;The posts are located in the &lt;code&gt;resources/templates/md/posts&lt;/code&gt; for Markdown files or &lt;code&gt;resources/templates/asc/posts&lt;/code&gt; for AsciiDoc files. Posts are written using Markdown or AsciiDoc and each post file should start with the date in the format of &lt;code&gt;yyyy-dd-MM&lt;/code&gt; or what is defined in the &lt;code&gt;:post-date-format&lt;/code&gt; key of &lt;code&gt;config.edn&lt;/code&gt;. The files have to have the extension &lt;code&gt;.md&lt;/code&gt; or &lt;code&gt;.asc&lt;/code&gt; respectively. The compiler will link the posts in order for you using the dates. A valid post file written in Markdown might look as follows:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;2014-19-12-post1.md
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The post content must start with a map containing the post metadata:&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;clojure&quot;&gt;{:title &amp;quot;First Post!&amp;quot;
- :layout :post
- :tags  &amp;#91;&amp;quot;tag1&amp;quot; &amp;quot;tag3&amp;quot;&amp;#93;}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The metadata contains the following keys:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;code&gt;:title&lt;/code&gt; - the title of the post&lt;/li&gt;&lt;li&gt;&lt;code&gt;:author&lt;/code&gt; - optional key to display the name of the author for the post&lt;/li&gt;&lt;li&gt;&lt;code&gt;:layout&lt;/code&gt; - the layout template to use for the post&lt;/li&gt;&lt;li&gt;&lt;code&gt;:tags&lt;/code&gt; - the tags associated with this post&lt;/li&gt;&lt;li&gt;&lt;code&gt;:toc&lt;/code&gt; - boolean indicating whether table of contents should be generated, defaults to false&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;The rest of the post should consist of valid Markdown content, eg:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;## Hello World
-
-This is my first post!
-
-check out this sweet code
-
-    &amp;#40;defn foo &amp;#91;bar&amp;#93;
-      &amp;#40;bar&amp;#41;&amp;#41;
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Nunc sodales pharetra massa, eget fringilla ex ornare et.
-Nunc mattis diam ac urna finibus sodales. Etiam sed ipsum
-et purus commodo bibendum. Cras libero magna, fringilla
-tristique quam sagittis, volutpat auctor mi. Aliquam luctus,
-nulla et vestibulum finibus, nibh justo semper tortor, nec
-vestibulum tortor est nec nisi.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you wish to enable comments on your posts, create a &lt;a href='https://disqus.com/'&gt;disqus&lt;/a&gt; account and &lt;a href='https://disqus.com/admin/create/'&gt;register&lt;/a&gt; your blog. &lt;code&gt;disqus?&lt;/code&gt; should be set to &lt;code&gt;true&lt;/code&gt; in the config and you must add your &lt;code&gt;disqus-shortname&lt;/code&gt;.&lt;/p&gt;&lt;h3&gt;&lt;a name=&quot;creating&amp;#95;pages&quot;&gt;&lt;/a&gt;Creating Pages&lt;/h3&gt;&lt;p&gt;Pages work similarly to posts, but aren't grouped by date. An example page might be an about page.&lt;/p&gt;&lt;p&gt;The pages contain the following metadata:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;code&gt;:title&lt;/code&gt; - the title of the page&lt;/li&gt;&lt;li&gt;&lt;code&gt;:layout&lt;/code&gt; - the layout template for the page&lt;/li&gt;&lt;li&gt;&lt;code&gt;:page-index&lt;/code&gt; - a number representing the order of the page in the navbar/sidebar&lt;/li&gt;&lt;li&gt;&lt;code&gt;:navbar?&lt;/code&gt; - determines whether the page should be shown in the navbar, &lt;code&gt;false&lt;/code&gt; by default&lt;/li&gt;&lt;li&gt;&lt;code&gt;:toc&lt;/code&gt; - boolean indicating whether table of contents should be generated, defaults to false&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;&lt;a name=&quot;customizing&amp;#95;layouts&quot;&gt;&lt;/a&gt;Customizing Layouts&lt;/h3&gt;&lt;p&gt;Cryogen uses &lt;a href='https://github.com/yogthos/Selmer'&gt;Selmer&lt;/a&gt; templating engine for layouts. Please refer to its documentation to see the supported tags and filters for the layouts.&lt;/p&gt;&lt;p&gt;The layouts are contained in the &lt;code&gt;resources/templates/html/layouts&lt;/code&gt; folder of the project. By default, the &lt;code&gt;base.html&lt;/code&gt; layout is used to provide the general layout for the site. This is where you would add static resources such as CSS and Js assets as well as define headers and footers for your site.&lt;/p&gt;&lt;p&gt;Each page layout should have a name that matches the &lt;code&gt;:layout&lt;/code&gt; key in the page metadata and end with &lt;code&gt;.html&lt;/code&gt;. Page layouts extend the base layout and should only contain the content relaveant to the page inside the &lt;code&gt;content&lt;/code&gt; block. For example, the &lt;code&gt;tag&lt;/code&gt; layout is located in &lt;code&gt;tag.html&lt;/code&gt; and looks as follows:&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;xml&quot;&gt;{% extends &amp;quot;templates/html/layouts/base.html&amp;quot; %}
-{% block content %}
-&amp;lt;div id=&amp;quot;posts-by-tag&amp;quot;&amp;gt;
-    &amp;lt;h2&amp;gt;Posts tagged {{name}}&amp;lt;/h2&amp;gt;
-    &amp;lt;ul&amp;gt;
-    {% for post in posts %}
-        &amp;lt;li&amp;gt;
-            &amp;lt;a href=&amp;quot;{{post.uri}}&amp;quot;&amp;gt;{{post.title}}&amp;lt;/a&amp;gt;
-        &amp;lt;/li&amp;gt;
-    {% endfor %}
-    &amp;lt;/ul&amp;gt;
-&amp;lt;/div&amp;gt;
-{% endblock %}
-&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;&lt;a name=&quot;code&amp;#95;syntax&amp;#95;highlighting&quot;&gt;&lt;/a&gt;Code Syntax Highlighting&lt;/h3&gt;&lt;p&gt;Cryogen uses &lt;a href='https://highlightjs.org/'&gt;Highlight.js&lt;/a&gt; for code syntax highlighting. You can add more languages by replacing &lt;code&gt;templates/js/highlight.pack.js&lt;/code&gt; with a customized package from &lt;a href='https://highlightjs.org/download/'&gt;here&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;The &lt;code&gt; initHighlightingOnLoad&lt;/code&gt; function is called in &lt;code&gt;templates/html/layouts/base.html&lt;/code&gt;.&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;xml&quot;&gt;&amp;lt;script&amp;gt;hljs.initHighlightingOnLoad&amp;#40;&amp;#41;;&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;&lt;a name=&quot;deploying&amp;#95;your&amp;#95;site&quot;&gt;&lt;/a&gt;Deploying Your Site&lt;/h2&gt;&lt;p&gt;The generated static content will be found under the &lt;code&gt;resources/public&lt;/code&gt; folder. Simply copy the content to a static folder for a server sugh as Nginx or Apache and your site is now ready for service.&lt;/p&gt;&lt;p&gt;A sample Nginx configuration that's placed in &lt;code&gt;/etc/nginx/sites-available/default&lt;/code&gt; can be seen below:&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;server{
-  listen 80 default&amp;#95;server;
-  listen &amp;#91;::&amp;#93;:80 default&amp;#95;server ipv6only=on;
-  server&amp;#95;name localhost &amp;lt;yoursite.com&amp;gt; &amp;lt;www.yoursite.com&amp;gt;;
-
-  access&amp;#95;log /var/log/blog&amp;#95;access.log;
-  error&amp;#95;log /var/log/blog&amp;#95;error.log;
-
-  location / {
-    alias /var/blog/;
-    error&amp;#95;page    404 = /404.html;
+&lt;p&gt;it has been some time since I last wrote a blog post. I daresay, alot happened since then. I finished my exams YAY!.&lt;/p&gt;&lt;p&gt;anyway I am changing again the back end of this blog. not that I had much trouble wth jekyll. but long story short, I was learning &lt;a href='www.clojure.org'&gt;Clojure&lt;/a&gt; and then I decided to make a blog and then I wanted an engine so I came back full circle to gh pages and that's it. &lt;br/&gt;&lt;h2&gt;&lt;a name=&quot;clojure&quot;&gt;&lt;/a&gt;Clojure&lt;/h2&gt;&lt;img src=&quot;http://clojure.org/file/view/clojure-icon.gif&quot; alt=&quot;clojure logo&quot; /&gt;&lt;br/&gt;&lt;a href='www.clojure.org'&gt;Clojure&lt;/a&gt; is a functional language and a child of &lt;a href='https://en.wikipedia.org/wiki/Lisp&amp;#95;%28programming&amp;#95;language%29'&gt;lisp&lt;/a&gt; that is based on the &lt;a href='https://en.wikipedia.org/wiki/Java&amp;#95;virtual&amp;#95;machine'&gt;JVM&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;clojure has a pragmatic approach to functional programming hence the java interop to make use of the big ammount of java libraries.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;h3&gt;&lt;a name=&quot;what&amp;#95;i&amp;#95;like&amp;#95;about&amp;#95;clojure&quot;&gt;&lt;/a&gt;What I like about clojure&lt;/h3&gt;&lt;/p&gt;&lt;h4&gt;&lt;a name=&quot;&lt;strong&gt;clojure&amp;#95;is&amp;#95;fun&lt;/strong&gt;&quot;&gt;&lt;/a&gt;&lt;strong&gt;Clojure is fun&lt;/strong&gt;&lt;/h4&gt;that's pretty much it. higher order functions are cool. functional programming makes for an elegant and concise code. I am not an expert on this matter and I don't do &lt;em&gt;clojure&lt;/em&gt; for a living but I think I am being honest when I say I enjoy functional programming.&lt;h4&gt;&lt;a name=&quot;&lt;strong&gt;dynamic&amp;#95;but&amp;#95;not&amp;#95;slow&lt;/strong&gt;&quot;&gt;&lt;/a&gt;&lt;strong&gt;dynamic but not slow&lt;/strong&gt;&lt;/h4&gt;&lt;em&gt;clojure&lt;/em&gt; is dynamically typed which allows interesting stuff like the &lt;strong&gt;Repl&lt;/strong&gt;but clojure still miles ahead of &lt;em&gt;python&lt;/em&gt; in terms of speed while keeping its memory requirements slow.&lt;h4&gt;&lt;a name=&quot;&lt;strong&gt;more&amp;#95;functions&amp;#95;than&amp;#95;python&lt;/strong&gt;&quot;&gt;&lt;/a&gt;&lt;strong&gt;more functions than python&lt;/strong&gt;&lt;/h4&gt;this one is not based on actual data. but &lt;em&gt;clojure&lt;/em&gt; is functional so it stresses on more functions and less types of data. and hence more common operations. for example to get the first item in an list in &lt;em&gt;python&lt;/em&gt; you would write&lt;pre&gt;&lt;code&gt;alist&amp;#91;0&amp;#93;
+&lt;/code&gt;&lt;/pre&gt;and in a nested list&lt;pre&gt;&lt;code&gt;alist&amp;#91;0&amp;#93;&amp;#91;0&amp;#93;
+&lt;/code&gt;&lt;/pre&gt;and here is the weird thing in &lt;em&gt;clojure&lt;/em&gt; you would write&lt;pre&gt;&lt;code&gt;&amp;#40;first alist&amp;#41;
+&lt;/code&gt;&lt;/pre&gt;and in a nested list&lt;pre&gt;&lt;code&gt;&amp;#40;ffirst alist&amp;#41;
+&lt;/code&gt;&lt;/pre&gt;you are probaply thinking that this is redundant and you might be true but I think that if an operation is repeated so much time then it is worth it to make a shortcut for it.&lt;h4&gt;&lt;a name=&quot;&lt;strong&gt;innovative&amp;#95;community&lt;/strong&gt;&quot;&gt;&lt;/a&gt;&lt;strong&gt;innovative community&lt;/strong&gt;&lt;/h4&gt;although I believe the clojure community is quite small, they seem quite enthusiastic about their language and they keep comming up with cool ideas and those cool ideas/libraries are what attracted me to clojue in the first place.&lt;p&gt;I would like to mention &lt;a href='https://github.com/clojure/core.logic'&gt;core.logic&lt;/a&gt;, &lt;a href='https://github.com/clojure/core.match'&gt;core.match&lt;/a&gt;, &lt;a href='https://github.com/clojure/core.typed'&gt;core.typed&lt;/a&gt;, and &lt;a href='https://github.com/clojure/clojurescript'&gt;clojurescript&lt;/a&gt;.&lt;/p&gt;
+</description>
+<pubDate>
+Sun, 05 Jul 2015 00:00:00 +0200
+</pubDate>
+</item>
+<item>
+<guid>
+http://blogawesome.com/posts/2015-04-05-radio-terminal.html
+</guid>
+<link>
+http://blogawesome.com/posts/2015-04-05-radio-terminal.html
+</link>
+<title>
+How I streamed an online radio station through the terminal
+</title>
+<description>
+&lt;p&gt;the radio station in this post is the quran radio station at &lt;a href='http://www.ertu.org/quran/QuranKareem.html'&gt;Quran Radio Website&lt;/a&gt;.in this post I will explain in detail how I could stream the station through the terminal. if you just want to know the how-to skip to the end of this post.&lt;/p&gt;&lt;h2&gt;&lt;a name=&quot;the&amp;#95;website&quot;&gt;&lt;/a&gt;The website&lt;/h2&gt;in the beginning, I wanted to get the streaming link the website uses to recieve the data. the website uses &lt;a href='http://www.jwplayer.com/'&gt;JWPlayer&lt;/a&gt; to stream the radio.Using the web browser's developer tools I found the script used to stream the radio station. the script included the url of the streamed data. after that I inspected the network tab. I found out that the website uses &lt;a href='http://en.wikipedia.org/wiki/Real&amp;#95;Time&amp;#95;Messaging&amp;#95;Protocol'&gt;RTMP&lt;/a&gt; protocol to communicate with the server.&lt;br/&gt;&lt;img src=&quot;/img/radio-web.png&quot; alt=&quot;getting the stream url&quot; title= &quot;a photo for an browser inspector&quot; /&gt;&lt;h2&gt;&lt;a name=&quot;rtmp&quot;&gt;&lt;/a&gt;RTMP&lt;/h2&gt;after some google search, I stumbled upon rtmpdump &lt;a href='https://rtmpdump.mplayerhq.hu/'&gt;rtmpdump&lt;/a&gt;. as the name suggests, it dumps a stream of rtmp station into a file or the stdin.But there is a catch. there are some parameters you need to set otherwise you will get a connection error.so how do I get the parameters? enter &lt;a href='https://www.wireshark.org/'&gt;wireshark&lt;/a&gt;.&lt;h2&gt;&lt;a name=&quot;wireshark&quot;&gt;&lt;/a&gt;wireshark&lt;/h2&gt;through &lt;i&gt;wireshark&lt;/i&gt;, I tracked the packets with the &lt;i&gt;RTMP&lt;/i&gt; protocol. I investigated the headers of those packets and used them as parameters for &lt;i&gt;rtmpdump&lt;/i&gt; and after some trial and error I finally got a connection. I pipelined the stream to the &lt;a href='http://mpv.io/'&gt;mpv player&lt;/a&gt; and it ran without GUI, efficently reading the stream.
+</description>
+<pubDate>
+Sun, 05 Apr 2015 00:00:00 +0200
+</pubDate>
+</item>
+<item>
+<guid>
+http://blogawesome.com/posts/2015-02-14-making-a-static-website.html
+</guid>
+<link>
+http://blogawesome.com/posts/2015-02-14-making-a-static-website.html
+</link>
+<title>
+ let's make a blog in 2 minutes
+</title>
+<description>
+&lt;h3&gt;&lt;a name=&quot;making&amp;#95;a&amp;#95;blog&amp;#95;as&amp;#95;a&amp;#95;static&amp;#95;website&quot;&gt;&lt;/a&gt;making a blog as a static website&lt;/h3&gt;&lt;p&gt;In this brief post I will be talking about making a blog using a static website generator. One of the famous ones is &lt;a href='http://jekyllrb.com/'&gt;Jekyll&lt;/a&gt;. also, I will talk about the advantage of a static website.&lt;/p&gt;&lt;h3&gt;&lt;a name=&quot;why&amp;#95;a&amp;#95;static&amp;#95;website?&quot;&gt;&lt;/a&gt;why a static website?&lt;/h3&gt;you might be wondering why would you use a static website. afterall, they are dumb and can't do much. but using a static website comes with benefits too.&lt;ol&gt;&lt;li&gt;easy to host: static website can be hosted on any hosting provide because every server provides the user with front-end data at the end.&lt;/li&gt;&lt;li&gt;easy to modify: you can modify your websites very easily. you don't need to handle wierd database and back-end issues. you can install themes instantly.&lt;br&gt;&lt;/li&gt;&lt;/ol&gt;&lt;h3&gt;&lt;a name=&quot;what&amp;#95;is&amp;#95;jekyll?&quot;&gt;&lt;/a&gt;what is jekyll?&lt;/h3&gt;jekyll is a &lt;a href='https://en.wikipedia.org/wiki/Ruby&amp;#95;%28programming&amp;#95;language%29'&gt;ruby&lt;/a&gt; &lt;a href='https://en.wikipedia.org/wiki/RubyGems'&gt;gem&lt;/a&gt; that tries to take away the tediousness and repition of managing your static website.jekyll does the following.&lt;ol&gt;&lt;li&gt;templating: jekyll allows easy management of templates and layouts you don't have to copy paste stuff just include the relevant files.&lt;/li&gt;&lt;li&gt;posts management: jekyll easily manages your posts. you simply use the markdown format to write your posts and put them in the &lt;i&gt;posts&lt;/i&gt; directoy. jekyll allows also tags, categories and drafts.&lt;br&gt;&lt;/li&gt;&lt;/ol&gt;&lt;h3&gt;&lt;a name=&quot;getting&amp;#95;started&amp;#95;with&amp;#95;jekyll&quot;&gt;&lt;/a&gt;getting started with jekyll&lt;/h3&gt;getting started with jekyll is very easyif you know &lt;a href='https://en.wikipedia.org/wiki/Git&amp;#95;(software'&gt;git&lt;/a&gt;). simply, make a repo. download a theme form &lt;a href='http://jekyllthemes.org/'&gt;jekyll themes&lt;/a&gt; and start writing your posts. yes, it is that easy. it also comes with free hosting supported by &lt;a href='http://github.com/'&gt;Github&lt;/a&gt;.&lt;br&gt;&lt;h3&gt;&lt;a name=&quot;closing&amp;#95;statement&quot;&gt;&lt;/a&gt;closing statement&lt;/h3&gt;making your blog is very easy with jekyll. this blog is already using jekyll. stay tuned for more posts.&lt;br&gt;
+</description>
+<pubDate>
+Sat, 14 Feb 2015 00:00:00 +0200
+</pubDate>
+</item>
+<item>
+<guid>
+http://blogawesome.com/posts/2015-02-09-three-in-a-row.html
+</guid>
+<link>
+http://blogawesome.com/posts/2015-02-09-three-in-a-row.html
+</link>
+<title>
+A solver for three-in-a-row-puzzle
+</title>
+<description>
+&lt;p&gt;I was happy I got an A+ in the constraint programming course and I was bored, so I decided to make a solver for a puzzle. Although I found out later the grades were somehow inflated, I like to make stuff like that. In this post I will explain how I did a solver for an online puzzle. including the &lt;em&gt;javascript&lt;/em&gt; code to read the puzzle and to post the answers back. &lt;br&gt; &lt;br&gt;&lt;/p&gt;&lt;h3&gt;&lt;a name=&quot;the&amp;#95;puzzle&quot;&gt;&lt;/a&gt;The puzzle&lt;/h3&gt;the puzzle is called three-in-a-row you can play it online &lt;a href='http://www.brainbashers.com/3inarow.asp'&gt;here&lt;/a&gt; . essentially, you have two fill the grid with white and blue blocks such that, no three consecutive blocks have the same color. besides, every row and every column should have an equal number of white and blue blocks.&lt;br&gt;&lt;img src=&quot;/images/puzzle-empty.png&quot; alt=&quot;empty puzzle example&quot; title= &quot;a photo for an empty puzzle&quot; /&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;&lt;a name=&quot;the&amp;#95;code&quot;&gt;&lt;/a&gt;The code&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;input code: a &lt;em&gt;javascript&lt;/em&gt; code to read the locations of filled blocks&lt;/li&gt;&lt;li&gt;constraint solving: a &lt;em&gt;python&lt;/em&gt; code to find the solution&lt;/li&gt;&lt;li&gt;output code: a &lt;em&gt;javascript&lt;/em&gt; code given the solutions it fills the grid with the right blocks. we don't want to click on those blocks manually do we?&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;&lt;a name=&quot;the&amp;#95;input&quot;&gt;&lt;/a&gt;The input&lt;/h3&gt;I wrote a simple &lt;em&gt;javascript&lt;/em&gt; code that loops over the table cells and produces two arrays, &lt;strong&gt;whites&lt;/strong&gt; and &lt;strong&gt;blues&lt;/strong&gt;. the arrays contain the locations of the blue and white blocks and are later printed through the browser javascript console&lt;p&gt;{% highlight javascript %} my_table = document.getElementsByClassName('inarowtable')[0]&lt;/p&gt;&lt;p&gt;whites=[] blues=[] for (var i=1; i&lt; my_table.rows.length; i++){  var base = (i-1) * (my_table.rows.length-1);   for (var j=0; j&lt; my_table.rows[0].cells.length-1; j++){&lt;pre&gt;&lt;code&gt;var cell = my&amp;#95;table.rows&amp;#91;i&amp;#93;.cells&amp;#91;j&amp;#93;;
+var class&amp;#95;name = cell.className;
+if &amp;#40;class&amp;#95;name.indexOf&amp;#40;&amp;quot;white&amp;quot;&amp;#41; &amp;gt;-1 &amp;#41;{
+  whites.push&amp;#40;base+j+1&amp;#41;;
+}else if &amp;#40;class&amp;#95;name.indexOf&amp;#40;&amp;quot;black&amp;quot;&amp;#41; &amp;gt;0 &amp;#41;{
+  blues.push&amp;#40;base+j+1&amp;#41;;
+} 
+&lt;/code&gt;&lt;/pre&gt;  } } console.log(whites.toString()); console.log(blues.toString()); {% endhighlight %}&lt;/p&gt;&lt;p&gt;&lt;br&gt; &lt;br&gt;&lt;/p&gt;&lt;h3&gt;&lt;a name=&quot;the&amp;#95;solver&quot;&gt;&lt;/a&gt;The solver&lt;/h3&gt;I use the &lt;a href='https://code.google.com/p/or-tools/'&gt;or-tools library&lt;/a&gt; for the solver. it iswritten in &lt;em&gt;C++&lt;/em&gt; and has bindings for &lt;em&gt;python&lt;/em&gt; which of course is usually easier to code in. you need to install the &lt;em&gt;ortools&lt;/em&gt; python package to run the solver code&lt;br&gt;for those of you unfamiliar with &lt;a href='http://en.wikipedia.org/wiki/Constraint&amp;#95;programming'&gt;constraint programming&lt;/a&gt;, it is a paradigm concerned with assigning values to variables by shrinking their domain using added constraints and then searching through remaining domain for possible solutions.&lt;h4&gt;&lt;a name=&quot;the&amp;#95;variables&quot;&gt;&lt;/a&gt;The variables&lt;/h4&gt;agrid of N x N variables where N is the width of the table. each cell could either be &lt;em&gt;blue&lt;/em&gt; or &lt;em&gt;white&lt;/em&gt;  so, I represent it with a 0 or 1.&lt;h4&gt;&lt;a name=&quot;the&amp;#95;constraints&quot;&gt;&lt;/a&gt;The constraints&lt;/h4&gt;the constraints are very easy to express &lt;ol&gt;&lt;li&gt;no three cells of the same color in a row, so the sum of every three consecutive cells cannot be zero nor three&lt;/li&gt;&lt;li&gt;equal number of whites and blues in all rows and columns, so the sum of every row and column is exactly seven&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;&lt;a name=&quot;the&amp;#95;input&quot;&gt;&lt;/a&gt;The input&lt;/h4&gt;the input is simply the size of the grid and the blue and white arrays we got earlier&lt;br&gt;&lt;h4&gt;&lt;a name=&quot;the&amp;#95;code&quot;&gt;&lt;/a&gt;The code&lt;/h4&gt;&lt;p&gt;{% highlight python %} from ortools.constraint_solver import pywrapcp&lt;/p&gt;&lt;p&gt;def main(dimension, whites, blues):&lt;pre&gt;&lt;code&gt;solver = pywrapcp.Solver&amp;#40;&amp;quot;three in a row&amp;quot;&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;line = range&amp;#40;0, dimension&amp;#41;
+grid = {} 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;for i in line:
+    for j in line:
+        grid&amp;#91;&amp;#40;i, j&amp;#41;&amp;#93; = solver.IntVar&amp;#40;0, 1&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;# set whites and blues
+for i in whites:
+    solver.Add&amp;#40;grid&amp;#91;&amp;#40;&amp;#40;i - 1&amp;#41; / dimension, &amp;#40;i - 1&amp;#41; % dimension&amp;#41;&amp;#93; == 0&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;for i in blues:
+    solver.Add&amp;#40;grid&amp;#91;&amp;#40;&amp;#40;i - 1&amp;#41; / dimension, &amp;#40;i - 1&amp;#41; % dimension&amp;#41;&amp;#93; == 1&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;# vertically three in a row
+for i in range&amp;#40;0, dimension - 2&amp;#41;:
+    for j in line:
+        solver.Add&amp;#40;
+            &amp;#40;solver.Sum&amp;#40;&amp;#91;
+                grid&amp;#91;&amp;#40;i, j&amp;#41;&amp;#93;,
+                grid&amp;#91;&amp;#40;&amp;#40;i + 1&amp;#41;, j&amp;#41;&amp;#93;,
+                grid&amp;#91;&amp;#40;&amp;#40;i + 2&amp;#41;, j&amp;#41;&amp;#93;&amp;#93;
+            &amp;#41; % 3&amp;#41;
+            &amp;gt; 0&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;# horizontally three in a row
+for j in range&amp;#40;0, dimension - 2&amp;#41;:
+    for i in line:
+        solver.Add&amp;#40;
+            &amp;#40;solver.Sum&amp;#40;&amp;#91;
+                grid&amp;#91;&amp;#40;i, j&amp;#41;&amp;#93;,
+                grid&amp;#91;&amp;#40;i, &amp;#40;j + 1&amp;#41;&amp;#41;&amp;#93;,
+                grid&amp;#91;&amp;#40;i, &amp;#40;j + 2&amp;#41;&amp;#41;&amp;#93;&amp;#93;
+            &amp;#41; % 3&amp;#41;
+            &amp;gt; 0&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;# every row equal blue and white
+for i in line:
+    solver.Add&amp;#40;solver.Sum&amp;#40;&amp;#91;grid&amp;#91;&amp;#40;i, j&amp;#41;&amp;#93; for j in line&amp;#93;&amp;#41; == dimension / 2&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;# every col equal blue and white
+for j in line:
+    solver.Add&amp;#40;solver.Sum&amp;#40;&amp;#91;grid&amp;#91;&amp;#40;i, j&amp;#41;&amp;#93; for i in line&amp;#93;&amp;#41; == dimension / 2&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;all&amp;#95;vars = &amp;#91;grid&amp;#91;&amp;#40;i, j&amp;#41;&amp;#93; for i in line for j in line&amp;#93; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;vars&amp;#95;phase = solver.Phase&amp;#40;all&amp;#95;vars,
+                          solver.INT&amp;#95;VAR&amp;#95;SIMPLE,
+                          solver.INT&amp;#95;VALUE&amp;#95;SIMPLE&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;solution = solver.Assignment&amp;#40;&amp;#41;
+solution.Add&amp;#40;all&amp;#95;vars&amp;#41;
+collector = solver.FirstSolutionCollector&amp;#40;solution&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;# And solve.
+solver.Solve&amp;#40;vars&amp;#95;phase, &amp;#91;collector&amp;#93;&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;if collector.SolutionCount&amp;#40;&amp;#41; == 1:
+    for i in line:
+        print &amp;#91;int&amp;#40;collector.Value&amp;#40;0, grid&amp;#91;&amp;#40;i, j&amp;#41;&amp;#93;&amp;#41;&amp;#41; for j in line&amp;#93; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;p&gt;if &lt;b&gt;name&lt;/b&gt; == '&lt;b&gt;main&lt;/b&gt;':&lt;pre&gt;&lt;code&gt;main&amp;#40;14,
+     &amp;#91;17, 22, 24, 34, 38, 49, 50, 55, 57, 58, 60, 64, 70, 82, 84, 90, 92, 93, 104, 142, 145, 146, 149, 151, 161,
+      169, 174, 181, 182, 183&amp;#93;,
+     &amp;#91;2, 5, 7, 19, 26, 42, 47, 66, 72, 96, 99, 102, 111, 121, 124, 125, 158, 168, 179, 190&amp;#93;&amp;#41; 
+&lt;/code&gt;&lt;/pre&gt;{% endhighlight %} &lt;br&gt; &lt;br&gt;&lt;/p&gt;&lt;h2&gt;&lt;a name=&quot;the&amp;#95;output&quot;&gt;&lt;/a&gt;The output&lt;/h2&gt;Now we have made the solver and we can get the zeros and ones that would solve the puzzle and we want to insert them in the puzzle. but those puzzles are big and it takes time to fill all the cells, why not make another javascript code to click on the blocks.&lt;br&gt;this looks like a nice idea, but javascript doesn't make that easy. fortunately, &lt;a href='http://jquery.com/'&gt;JQuery&lt;/a&gt; does. so I load JQuery into the page and then given the solution grid I fill the blocks&lt;br&gt;&lt;br&gt;&lt;h3&gt;&lt;a name=&quot;the&amp;#95;code&quot;&gt;&lt;/a&gt;The code&lt;/h3&gt;{% highlight javascript %}var jq = document.createElement('script');jq.src = &quot;https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js&quot;;document.getElementsByTagName('head')[0].appendChild(jq);&lt;p&gt;solution = [[0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1], [1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0], [1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1], [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0], [1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0], [0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0], [1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0], [0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1], [1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0], [1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1], [0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0], [0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1]];&lt;/p&gt;&lt;p&gt;for (var i=1; i&lt; my_table.rows.length; i++){   var base = (i-1) * (my_table.rows.length-1);   for (var j=0; j&lt; my_table.rows[0].cells.length-1; j++){&lt;pre&gt;&lt;code&gt;var cell = my&amp;#95;table.rows&amp;#91;i&amp;#93;.cells&amp;#91;j&amp;#93;;
+var class&amp;#95;name = cell.className;
+if &amp;#40;class&amp;#95;name.indexOf&amp;#40;&amp;quot;grey&amp;quot;&amp;#41; &amp;gt;-1 &amp;#41;{
+  $&amp;#40;cell&amp;#41;.trigger&amp;#40;'mouseup'&amp;#41;;
+  if &amp;#40;solution&amp;#91;i-1&amp;#93;&amp;#91;j&amp;#93; == 0&amp;#41;{
+    $&amp;#40;cell&amp;#41;.trigger&amp;#40;'mouseup'&amp;#41;;
   }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Simply set &lt;code&gt;yoursite.com&lt;/code&gt; to the domain of your site in the above configuration and ensure the static content is available at &lt;code&gt;/var/blog/&lt;/code&gt;. Finally, place your custom error page in the &lt;code&gt;/var/blog/404.html&lt;/code&gt; file.&lt;/p&gt;&lt;h2&gt;&lt;a name=&quot;some&amp;#95;sites&amp;#95;made&amp;#95;with&amp;#95;cryogen&quot;&gt;&lt;/a&gt;Some Sites Made With Cryogen&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='http://carmenla.me/blog/index.html'&gt;My personal blog&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='http://cryogenweb.org'&gt;Cryogen Documentation Site&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='http://yogthos.net/'&gt;Yogthos blog&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='http://www.clojure.tn'&gt;Clojure :in Tunisia&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='http://dl1ely.github.io'&gt;dl1ely.github.io&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='http://jonase.github.io/nil-recur'&gt;nil/recur&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='http://tangrammer.github.io/'&gt;on the clojure move&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='http://blog.jethrokuan.com/'&gt;cognizance&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+} 
+&lt;/code&gt;&lt;/pre&gt;  } } {% endhighlight %} &lt;br&gt; &lt;br&gt;&lt;/p&gt;&lt;h2&gt;&lt;a name=&quot;summary&quot;&gt;&lt;/a&gt;Summary&lt;/h2&gt;in this blog post, I explained how I worte a solver for an online puzzle using &lt;em&gt;python&lt;/em&gt; and how jacascript can be used. If you have read this far then congratulations! let me know what you think in the comments.
 </description>
 <pubDate>
-Thu, 11 Dec 2014 00:00:00 +0200
+Mon, 09 Feb 2015 00:00:00 +0200
 </pubDate>
 </item>
 <item>
 <guid>
-http://blogawesome.com/posts/2014-11-04-second-post.html
+http://blogawesome.com/posts/2015-02-04-hello-blog.html
 </guid>
 <link>
-http://blogawesome.com/posts/2014-11-04-second-post.html
+http://blogawesome.com/posts/2015-02-04-hello-blog.html
 </link>
 <title>
-Yet Another Post
+Welcome to my blog
 </title>
 <description>
-&lt;h3&gt;&lt;a name=&quot;this&amp;#95;post&amp;#95;so&amp;#95;fetch&quot;&gt;&lt;/a&gt;This Post So Fetch&lt;/h3&gt;&lt;p&gt;some more stuff happened&lt;/p&gt;
+ &lt;p&gt;I am Happy to write the first entry in my blog. I will try to write a blog post every week about some devlopment work I made outside of study. If the week was so busy with Uni work, then I might just blog about it. this is also my first blog ever I hope a blog will be useful at some point.&lt;/p&gt;&lt;h3&gt;&lt;a name=&quot;introduce&amp;#95;yourself&amp;#95;..&amp;#95;the&amp;#95;classical&amp;#95;interview&amp;#95;question&quot;&gt;&lt;/a&gt;Introduce yourself .. the classical interview question&lt;/h3&gt;&lt;br&gt;don't get me wrong. I haven't been to that many interviews. but I think it is the first question the interviewers tend to ask and for a good reason.&lt;p&gt;so to resopond I would say, it is complicated. so maybe I will take about it more later. But long story short, I am an Egyptian, Muslim, brown, CS Major with alot of defficulties in his life, or so I believe. that's it for hello blog.&lt;/p&gt;
 </description>
 <pubDate>
-Tue, 04 Nov 2014 00:00:00 +0200
-</pubDate>
-</item>
-<item>
-<guid>
-http://blogawesome.com/posts/2014-03-10-first-post.html
-</guid>
-<link>
-http://blogawesome.com/posts/2014-03-10-first-post.html
-</link>
-<title>
-A Post
-</title>
-<description>
-&lt;h3&gt;&lt;a name=&quot;this&amp;#95;post&amp;#95;not&amp;#95;fetch&amp;#95;enough&quot;&gt;&lt;/a&gt;This Post Not Fetch Enough&lt;/h3&gt;&lt;p&gt;some stuff happened&lt;/p&gt;
-</description>
-<pubDate>
-Mon, 10 Mar 2014 00:00:00 +0200
+Wed, 04 Feb 2015 00:00:00 +0200
 </pubDate>
 </item>
 </channel>

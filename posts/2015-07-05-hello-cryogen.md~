@@ -1,0 +1,5 @@
+{:title "Hello Cryogen and other stuff"
+ :layout :post
+ :tags  ["web" "clojure"]}
+
+it has been some time since I last wrote a blog post. I daresay, alot happened since then. I finished my exams YAY!. anyway I am changing again the back end of this blog. not that I had much trouble wth jekyll. but long story short, I was learning [Clojure](www.clojure.org)

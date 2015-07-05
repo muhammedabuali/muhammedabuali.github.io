@@ -1,0 +1,4 @@
+{:title " let's make a blog in 2 minutes"
+ :layout :post
+ :tags  ["web" "tutorial"]}
+

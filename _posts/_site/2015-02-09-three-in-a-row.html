@@ -1,0 +1,192 @@
+<p><br />
+I was happy I got an A+ in the constraint programming course and I was bored, so I decided to make a solver for a puzzle. Although I found out later the grades were somehow inflated, I like to make stuff like that. In this post I will explain how I did a solver for an online puzzle. including the <em>javascript</em> code to read the puzzle and to post the answers back.
+<br />
+<br /></p>
+
+<h3 id="the-puzzle">The puzzle</h3>
+<p>the puzzle is called three-in-a-row you can play it online <a href="http://www.brainbashers.com/3inarow.asp">here</a> . essentially, you have two fill the grid with white and blue blocks such that, no three consecutive blocks have the same color. besides, every row and every column should have an equal number of white and blue blocks.
+<br />
+<img src="/images/puzzle-empty.png" alt="empty puzzle example" title="a photo for an empty puzzle" />
+<br /><br /></p>
+
+<h3 id="the-code">The code</h3>
+<ul>
+  <li>input code: a <em>javascript</em> code to read the locations of filled blocks</li>
+  <li>constraint solving: a <em>python</em> code to find the solution</li>
+  <li>output code: a <em>javascript</em> code given the solutions it fills the grid with the right blocks. we don’t want to click on those blocks manually do we?
+<br />
+<br /></li>
+</ul>
+
+<h3 id="the-input">The input</h3>
+<p>I wrote a simple <em>javascript</em> code that loops over the table cells and produces two arrays, <strong>whites</strong> and <strong>blues</strong>. the arrays contain the locations of the blue and white blocks and are later printed through the browser javascript console</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">my_table</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;inarowtable&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nx">whites</span><span class="o">=</span><span class="p">[]</span>
+<span class="nx">blues</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span> <span class="nx">my_table</span><span class="p">.</span><span class="nx">rows</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+ <span class="kd">var</span> <span class="nx">base</span> <span class="o">=</span> <span class="p">(</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nx">my_table</span><span class="p">.</span><span class="nx">rows</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span> <span class="nx">my_table</span><span class="p">.</span><span class="nx">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">cells</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">cell</span> <span class="o">=</span> <span class="nx">my_table</span><span class="p">.</span><span class="nx">rows</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">cells</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">class_name</span> <span class="o">=</span> <span class="nx">cell</span><span class="p">.</span><span class="nx">className</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">class_name</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">)</span> <span class="o">&gt;-</span><span class="mi">1</span> <span class="p">){</span>
+      <span class="nx">whites</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">base</span><span class="o">+</span><span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">class_name</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">0</span> <span class="p">){</span>
+      <span class="nx">blues</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">base</span><span class="o">+</span><span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">whites</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">blues</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span></code></pre></div>
+
+<p><br />
+<br /></p>
+
+<h3 id="the-solver">The solver</h3>
+<p>I use the <a href="https://code.google.com/p/or-tools/">or-tools library</a> for the solver. it is
+written in <em>C++</em> and has bindings for <em>python</em> which of course is usually easier to code in. you need to install the <em>ortools</em> python package to run the solver code
+<br />
+for those of you unfamiliar with <a href="http://en.wikipedia.org/wiki/Constraint_programming">constraint programming</a>, it is a paradigm concerned with assigning values to variables by shrinking their domain using added constraints and then searching through remaining domain for possible solutions.</p>
+
+<h4 id="the-variables">The variables</h4>
+<p>agrid of N x N variables where N is the width of the table. each cell could either be <em>blue</em> or <em>white</em>  so, I represent it with a 0 or 1.</p>
+
+<h4 id="the-constraints">The constraints</h4>
+<p>the constraints are very easy to express </p>
+
+<ol>
+  <li>no three cells of the same color in a row, so the sum of every three consecutive cells cannot be zero nor three</li>
+  <li>equal number of whites and blues in all rows and columns, so the sum of every row and column is exactly seven</li>
+</ol>
+
+<h4 id="the-input-1">The input</h4>
+<p>the input is simply the size of the grid and the blue and white arrays we got earlier
+<br /></p>
+
+<h4 id="the-code-1">The code</h4>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">ortools.constraint_solver</span> <span class="kn">import</span> <span class="n">pywrapcp</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">whites</span><span class="p">,</span> <span class="n">blues</span><span class="p">):</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">pywrapcp</span><span class="o">.</span><span class="n">Solver</span><span class="p">(</span><span class="s">&quot;three in a row&quot;</span><span class="p">)</span>
+
+    <span class="n">line</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dimension</span><span class="p">)</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">grid</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">IntVar</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># set whites and blues</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">whites</span><span class="p">:</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">grid</span><span class="p">[((</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">dimension</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">dimension</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">blues</span><span class="p">:</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">grid</span><span class="p">[((</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">dimension</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">dimension</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># vertically three in a row</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dimension</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">solver</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">Sum</span><span class="p">([</span>
+                    <span class="n">grid</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)],</span>
+                    <span class="n">grid</span><span class="p">[((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">j</span><span class="p">)],</span>
+                    <span class="n">grid</span><span class="p">[((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">),</span> <span class="n">j</span><span class="p">)]]</span>
+                <span class="p">)</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c"># horizontally three in a row</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dimension</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">solver</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">Sum</span><span class="p">([</span>
+                    <span class="n">grid</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)],</span>
+                    <span class="n">grid</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))],</span>
+                    <span class="n">grid</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">))]]</span>
+                <span class="p">)</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c"># every row equal blue and white</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">Sum</span><span class="p">([</span><span class="n">grid</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">line</span><span class="p">])</span> <span class="o">==</span> <span class="n">dimension</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c"># every col equal blue and white</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">Sum</span><span class="p">([</span><span class="n">grid</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line</span><span class="p">])</span> <span class="o">==</span> <span class="n">dimension</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">all_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">grid</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+
+    <span class="n">vars_phase</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">Phase</span><span class="p">(</span><span class="n">all_vars</span><span class="p">,</span>
+                              <span class="n">solver</span><span class="o">.</span><span class="n">INT_VAR_SIMPLE</span><span class="p">,</span>
+                              <span class="n">solver</span><span class="o">.</span><span class="n">INT_VALUE_SIMPLE</span><span class="p">)</span>
+
+    <span class="n">solution</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">Assignment</span><span class="p">()</span>
+    <span class="n">solution</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">all_vars</span><span class="p">)</span>
+    <span class="n">collector</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">FirstSolutionCollector</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+
+    <span class="c"># And solve.</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">Solve</span><span class="p">(</span><span class="n">vars_phase</span><span class="p">,</span> <span class="p">[</span><span class="n">collector</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">collector</span><span class="o">.</span><span class="n">SolutionCount</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">print</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">collector</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">grid</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]))</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span>
+         <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">142</span><span class="p">,</span> <span class="mi">145</span><span class="p">,</span> <span class="mi">146</span><span class="p">,</span> <span class="mi">149</span><span class="p">,</span> <span class="mi">151</span><span class="p">,</span> <span class="mi">161</span><span class="p">,</span>
+          <span class="mi">169</span><span class="p">,</span> <span class="mi">174</span><span class="p">,</span> <span class="mi">181</span><span class="p">,</span> <span class="mi">182</span><span class="p">,</span> <span class="mi">183</span><span class="p">],</span>
+         <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="mi">168</span><span class="p">,</span> <span class="mi">179</span><span class="p">,</span> <span class="mi">190</span><span class="p">])</span></code></pre></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="the-output">The output</h2>
+<p>Now we have made the solver and we can get the zeros and ones that would solve the puzzle and we want to insert them in the puzzle. but those puzzles are big and it takes time to fill all the cells, why not make another javascript code to click on the blocks.
+<br />
+this looks like a nice idea, but javascript doesn’t make that easy. fortunately, <a href="http://jquery.com/">JQuery</a> does. so I load JQuery into the page and then given the solution grid I fill the blocks
+<br />
+<br /></p>
+
+<h3 id="the-code-2">The code</h3>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">jq</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+<span class="nx">jq</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s2">&quot;https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js&quot;</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">jq</span><span class="p">);</span>
+
+<span class="nx">solution</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]];</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span> <span class="nx">my_table</span><span class="p">.</span><span class="nx">rows</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">base</span> <span class="o">=</span> <span class="p">(</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nx">my_table</span><span class="p">.</span><span class="nx">rows</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span> <span class="nx">my_table</span><span class="p">.</span><span class="nx">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">cells</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">cell</span> <span class="o">=</span> <span class="nx">my_table</span><span class="p">.</span><span class="nx">rows</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">cells</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">class_name</span> <span class="o">=</span> <span class="nx">cell</span><span class="p">.</span><span class="nx">className</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">class_name</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;grey&quot;</span><span class="p">)</span> <span class="o">&gt;-</span><span class="mi">1</span> <span class="p">){</span>
+      <span class="nx">$</span><span class="p">(</span><span class="nx">cell</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;mouseup&#39;</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">solution</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nx">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="nx">$</span><span class="p">(</span><span class="nx">cell</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;mouseup&#39;</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="summary">Summary</h2>
+<p>in this blog post, I explained how I worte a solver for an online puzzle using <em>python</em> and how jacascript can be used. If you have read this far then congratulations! let me know what you think in the comments.</p>
